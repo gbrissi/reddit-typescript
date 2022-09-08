@@ -1,0 +1,25 @@
+{
+  "name": "reddit-typescript",
+  "version": "1.0.0",
+  "description": "fullstack react graphql typescript tutorial made by ben awad",
+  "main": "index.js",
+  "scripts": {
+    "watch": "tsc -w",
+    "start": "ts-node src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gbrissi/reddit-typescript.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gbrissi/reddit-typescript/issues"
+  },
+  "homepage": "https://github.com/gbrissi/reddit-typescript#readme",
+  "devDependencies": {
+    "@types/node": "^18.7.16",
+    "typescript": "^4.8.2"
+  }
+}
