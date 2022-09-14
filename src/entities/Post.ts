@@ -21,5 +21,4 @@ export class Post {
   @Field()
   @Property({type: 'text'})
   title!: string;
-
 }
