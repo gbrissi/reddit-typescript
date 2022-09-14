@@ -8,17 +8,18 @@ export class Post {
   
   @Field()
   @PrimaryKey()
-  id!: number; // string is also supported
+  id!: number; 
 
   @Field(() => String)
   @Property({type: 'date'})
-  createdAt: Date = new Date();
+  createdAt = new Date();
 
   @Field(() => String)
   @Property({type: 'date', onUpdate: () => new Date() })
-  updatedAt: Date = new Date();
+  updatedAt = new Date();
 
   @Field()
   @Property({type: 'text'})
   title!: string;
+  
 }

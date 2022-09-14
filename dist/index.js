@@ -29,9 +29,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
             resolvers: [hello_1.HelloResolver, post_1.PostResolver],
             validate: false,
         }),
-        context: () => { {
-            em: orm.em;
-        } }
+        context: () => ({ em: orm.em.fork({}) })
     });
     yield apolloServer.start();
     apolloServer.applyMiddleware({ app });
