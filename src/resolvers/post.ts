@@ -47,16 +47,12 @@ export class PostResolver {
     async deletePost(
         @Arg('id', () => Int) id: number, 
         @Ctx() {em}: MyContext): Promise<boolean> {
-        try {
-            const post = await em.findOne(Post, {id});
-            if(!post) {
-                return false
-            } else {
-                await em.nativeDelete(Post, {id})
-                return true;
-            }
-        } catch {
+        const post = await em.findOne(Post, {id});
+        if(!post) {
             return false
+        } else {
+            await em.nativeDelete(Post, {id})
+            return true;
         }
     }
 }
