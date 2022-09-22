@@ -1,5 +1,5 @@
 const Index = () => (
-  <div>Hello World!!</div>
+  <div>Index page!</div>
 )
 
 export default Index

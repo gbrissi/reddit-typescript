@@ -13,12 +13,21 @@ import connectRedis from 'connect-redis';
 import { createClient } from "redis";
 import { MyContext } from "./types";
 import {ApolloServerPluginLandingPageGraphQLPlayground} from 'apollo-server-core'
+import cors from 'cors'
+
+
 
 const main = async() => {
     const orm = await MikroORM.init(microConfig);
     await orm.getMigrator().up();
- 
+
+    const corsOptions = {
+        origin: '*',
+        credentials: true
+    }
+
     const app = express();
+    app.use(cors(corsOptions))
 
     const RedisStore = connectRedis(session)
     const redisClient = createClient({ legacyMode: true })
