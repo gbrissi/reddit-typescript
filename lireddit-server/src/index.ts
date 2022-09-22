@@ -22,7 +22,7 @@ const main = async() => {
     await orm.getMigrator().up();
 
     const corsOptions = {
-        origin: '*',
+        origin: 'http://localhost:3000',
         credentials: true
     }
 
@@ -68,7 +68,7 @@ const main = async() => {
     });
 
     await apolloServer.start()
-    apolloServer.applyMiddleware({app})
+    apolloServer.applyMiddleware({app, cors: false})
 
     app.listen(4000, () => {
         console.log("\nServer started at port 4000!")

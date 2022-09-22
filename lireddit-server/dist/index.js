@@ -31,7 +31,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     const orm = yield core_1.MikroORM.init(mikro_orm_config_1.default);
     yield orm.getMigrator().up();
     const corsOptions = {
-        origin: '*',
+        origin: 'http://localhost:3000',
         credentials: true
     };
     const app = (0, express_1.default)();
@@ -70,7 +70,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
         context: ({ req, res }) => ({ em: orm.em.fork({}), req, res })
     });
     yield apolloServer.start();
-    apolloServer.applyMiddleware({ app });
+    apolloServer.applyMiddleware({ app, cors: false });
     app.listen(4000, () => {
         console.log("\nServer started at port 4000!");
     });
