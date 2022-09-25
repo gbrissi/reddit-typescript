@@ -4,32 +4,23 @@ import { FormControl, FormLabel, Input, FormErrorMessage, Box, Button } from '@c
 import Wrapper from "../components/Wrapper"
 import { InputField } from '../components/InputField';
 import { useMutation } from 'urql';
+import { useRegisterMutation } from '../generated/graphql';
+import { toErrorMap } from '../utils/toErrorMap';
 
 interface registerProps {}
 
-const REGISTER_MUT = `
-mutation Register($username: String!, $password: String!){
-    register(options: {username: $username, password: $password}) {
-      errors {
-        field
-        message
-      }
-      user {
-        id
-        createdAt
-        updatedAt
-        username
-      }
-    }
-  }
-`
-
 const Register: React.FC<registerProps> = ({}) => {
-    const [, register]  = useMutation(REGISTER_MUT)
+    const [, register]  = useRegisterMutation()
     return (
         <Wrapper variant='small'>
-            <Formik initialValues={{username: "", password: ""}} onSubmit={async (values) => {
-                return await register(values);
+            <Formik initialValues={{username: "", password: ""}} onSubmit={async (values, {setErrors}) => {
+                const response = await register(values);
+                if (response.data?.register.errors) {
+                    [{field: 'username', message:'something wrong'}]
+                    setErrors(
+                        toErrorMap(response.data.register.errors)
+                    )
+                }
             }}>
                 {({isSubmitting}) => (
                     <Form>

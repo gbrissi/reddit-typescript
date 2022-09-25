@@ -83,7 +83,7 @@ let UserResolver = class UserResolver {
                 return {
                     errors: [{
                             field: 'username',
-                            message: 'length must be grater than 2'
+                            message: 'length must be greater than 2'
                         }]
                 };
             }
