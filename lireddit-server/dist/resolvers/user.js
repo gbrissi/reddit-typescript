@@ -104,7 +104,7 @@ let UserResolver = class UserResolver {
                 yield em.persistAndFlush(user);
             }
             catch (error) {
-                if (error.code === '23505') {
+                if (error.detail.includes('already exists')) {
                     return {
                         errors: [
                             {
@@ -116,6 +116,7 @@ let UserResolver = class UserResolver {
                 }
                 console.log('message: ', error.message);
             }
+            console.log(user);
             req.session.userId = user.id;
             return {
                 user

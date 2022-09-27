@@ -74,7 +74,7 @@ export class UserResolver {
             await em.persistAndFlush(user)
         } catch(error) {
             //duplicate username error
-            if(error.code === '23505' ) {
+            if(error.detail.includes('already exists')) {
                 return {
                     errors: [
                         {
@@ -90,6 +90,7 @@ export class UserResolver {
         //store user id session
         //this will set a cookie on the user
         //keep them logged in
+        console.log(user)
         req.session.userId = user.id
         return {
             user
