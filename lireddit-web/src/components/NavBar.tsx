@@ -8,7 +8,7 @@ interface NavBarProps {
 }
 
 export const NavBar: React.FC<NavBarProps> = ({}) => {
-    const [, logout] = useLogoutMutation();
+    const [{fetching: logoutFetching}, logout] = useLogoutMutation();
     const [{data, fetching}] = useMeQuery();
     let body = null
     
@@ -32,7 +32,12 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
                 <Box mr={2}>{data.me.username}</Box>
                 <Button onClick={() => {
                     logout()
-                }} variant='link'>logout</Button>
+                }} 
+                variant='link'
+                isLoading={logoutFetching}
+                >
+                    logout
+                </Button>
             </Flex>
         )
     }
