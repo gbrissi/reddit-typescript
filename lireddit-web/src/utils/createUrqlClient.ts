@@ -2,8 +2,6 @@ import { dedupExchange, fetchExchange } from "urql"
 import { cacheExchange } from "@urql/exchange-graphcache"
 import { LogoutMutation, MeQuery, MeDocument, LoginMutation, RegisterMutation } from "../generated/graphql"
 import { betterUpdateQuery } from "./betterUpdateQuery"
-import { withUrqlClient } from "next-urql"
-import Index from "../pages"
 
 export const createUrqlClient = (ssrExchange: any) => (
     {
@@ -63,4 +61,3 @@ export const createUrqlClient = (ssrExchange: any) => (
     ]
 })
 
-export default withUrqlClient(createUrqlClient)(Index)
