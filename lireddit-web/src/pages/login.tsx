@@ -33,7 +33,6 @@ const Login: React.FC<{}> = ({}) => {
                 )}
             </Formik>
         </Wrapper>
-
     );
 }
 
