@@ -27,7 +27,9 @@ const connect_redis_1 = __importDefault(require("connect-redis"));
 const redis_1 = require("redis");
 const apollo_server_core_1 = require("apollo-server-core");
 const cors_1 = __importDefault(require("cors"));
+const sendEmail_1 = require("./utils/sendEmail");
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
+    (0, sendEmail_1.sendEmail)("bob2@bob2bob2.com", "hello there");
     const orm = yield core_1.MikroORM.init(mikro_orm_config_1.default);
     yield orm.getMigrator().up();
     const corsOptions = {
