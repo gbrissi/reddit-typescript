@@ -14,11 +14,8 @@ import { createClient } from "redis";
 import { MyContext } from "./types";
 import {ApolloServerPluginLandingPageGraphQLPlayground} from 'apollo-server-core'
 import cors from 'cors'
-import { sendEmail } from "./utils/sendEmail";
 
 const main = async() => {
-    sendEmail("bob2@bob2bob2.com", "hello there");
-
     const orm = await MikroORM.init(microConfig);
     await orm.getMigrator().up();
 
