@@ -58,7 +58,7 @@ UserResponse = __decorate([
     (0, type_graphql_1.ObjectType)()
 ], UserResponse);
 let UserResolver = class UserResolver {
-    forgotPassword(email, { em }) {
+    forgotPassword() {
         return __awaiter(this, void 0, void 0, function* () {
             return true;
         });
@@ -114,7 +114,7 @@ let UserResolver = class UserResolver {
             if (!user) {
                 return {
                     errors: [{
-                            field: 'username',
+                            field: 'usernameOrEmail',
                             message: "that username doesn't exists",
                         }]
                 };
@@ -148,10 +148,8 @@ let UserResolver = class UserResolver {
 };
 __decorate([
     (0, type_graphql_1.Mutation)(() => Boolean),
-    __param(0, (0, type_graphql_1.Arg)('email')),
-    __param(1, (0, type_graphql_1.Ctx)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "forgotPassword", null);
 __decorate([

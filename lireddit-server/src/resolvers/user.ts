@@ -27,8 +27,8 @@ class UserResponse {
 export class UserResolver {
     @Mutation(() => Boolean)
     async forgotPassword(
-    @Arg('email') email: string,
-    @Ctx() {em}: MyContext
+    //@Arg('email') email: string,
+    //@Ctx() {em}: MyContext
     ) {
         //const user = await em.findOne(User, {email});
         return true
@@ -100,7 +100,7 @@ export class UserResolver {
         if (!user) {
             return {
                 errors: [{
-                    field: 'username',
+                    field: 'usernameOrEmail',
                     message: "that username doesn't exists",
                 }]
             }
