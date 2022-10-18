@@ -29,7 +29,7 @@ const main = async() => {
 
     const RedisStore = connectRedis(session)
     const redis = new Redis()
-    redis.connect().catch(console.error)
+    //redis.connect().catch(console.error)
 
     app.use(
         session({

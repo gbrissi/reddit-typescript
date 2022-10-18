@@ -38,7 +38,6 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     app.use((0, cors_1.default)(corsOptions));
     const RedisStore = (0, connect_redis_1.default)(express_session_1.default);
     const redis = new ioredis_1.default();
-    redis.connect().catch(console.error);
     app.use((0, express_session_1.default)({
         name: constants_1.COOKIE_NAME,
         store: new RedisStore({
