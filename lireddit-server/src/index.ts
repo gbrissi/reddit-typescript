@@ -5,17 +5,31 @@ import microConfig from "./mikro-orm.config";
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from "type-graphql";
-import { HelloResolver } from "./resolvers/hello";
 import { PostResolver } from "./resolvers/post";
 import { UserResolver } from "./resolvers/user";
 import session from "express-session";
 import connectRedis from 'connect-redis';
 import Redis from "ioredis";
-import { MyContext } from "./types";
 import {ApolloServerPluginLandingPageGraphQLPlayground} from 'apollo-server-core'
 import cors from 'cors'
+import {DataSource} from 'typeorm'
+import { Post } from "./entities/Post";
+import { User } from "./entities/User";
+import { MyContext } from "./types";
+
+export const conn = new DataSource({
+    type: 'postgres',
+    database: 'lireddit2',
+    username: 'postgres',
+    password: 'postgres',
+    logging: true,
+    synchronize: true,
+    entities: [Post, User]
+})
 
 const main = async() => {
+    conn.initialize()
+
     const orm = await MikroORM.init(microConfig);
     await orm.getMigrator().up();
 
@@ -52,7 +66,7 @@ const main = async() => {
 
     const apolloServer = new ApolloServer({
         schema: await buildSchema({
-            resolvers: [HelloResolver, PostResolver, UserResolver],
+            resolvers: [PostResolver, UserResolver],
             validate: false,
         }),
         plugins: [
@@ -62,7 +76,7 @@ const main = async() => {
                 }
             })
         ],
-        context: ({req, res}): MyContext => ({ em: orm.em.fork({}), req, res, redis})
+        context: ({ req, res }): MyContext => ({ req, res, redis })
     });
 
     await apolloServer.start()

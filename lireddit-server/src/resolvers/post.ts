@@ -1,57 +1,51 @@
 import { Post } from "../entities/Post";
-import { MyContext } from "../types";
-import { Resolver, Query, Ctx, Int, Arg, Mutation } from "type-graphql";
+import { Resolver, Query, Int, Arg, Mutation } from "type-graphql";
 
 @Resolver()
 export class PostResolver {
     @Query(() => [Post])
     async posts(
-        @Ctx() {em}: MyContext
+        
     ): Promise<Post[]> {
-        return em.find(Post, {})
+        return Post.find()
     }
 
     @Query(() => Post, {nullable: true})
-    post(
-        @Arg('id', () => Int) id:number, 
-        @Ctx() {em}: MyContext): Promise<Post | null> {
-        return em.findOne(Post, {id})
+    post(@Arg('id') id:number): Promise<Post | null> {
+        return Post.findOne({where: {id}})
     }
 
     @Mutation(() => Post, {nullable: true})
     async createPost(
-        @Arg('title', () => String) title:string, 
-        @Ctx() {em}: MyContext): Promise<Post | null> {
-        const post = em.create(Post, {title})
-        await em.persistAndFlush(post)
-        return post
+        @Arg('title') title:string, 
+        ): Promise<Post> {
+        return Post.create({title}).save();
     }
 
     @Mutation(() => Post, {nullable: true})
     async updatePost(
-        @Arg('id', () => Int) id:number, 
+        @Arg('id') id:number, 
         @Arg('title', () => String, {nullable: true}) title:string, 
-        @Ctx() {em}: MyContext): Promise<Post | null> {
-        const post = await em.findOne(Post, {id});
+        ): Promise<Post | null> {
+        const post = await Post.findOne({where: {id}});
         if (!post) {
             return null
         }
         if (typeof title !== 'undefined') {
-            post.title = title;
-            await em.persistAndFlush(post)
+            await Post.update({id}, {title})
         }
         return post
     }
 
     @Mutation(() => Boolean)
     async deletePost(
-        @Arg('id', () => Int) id: number, 
-        @Ctx() {em}: MyContext): Promise<boolean> {
-        const post = await em.findOne(Post, {id});
+        @Arg('id') id: number, 
+        ): Promise<boolean> {
+        const post = await Post.findOne({where: {id}})
         if(!post) {
             return false
         } else {
-            await em.nativeDelete(Post, {id})
+            await Post.delete(id)
             return true;
         }
     }
