@@ -21,7 +21,7 @@ export const conn = new DataSource({
     type: 'postgres',
     database: 'lireddit2',
     username: 'postgres',
-    password: 'postgres',
+    password: 'admin',
     logging: true,
     synchronize: true,
     entities: [Post, User]
@@ -29,9 +29,6 @@ export const conn = new DataSource({
 
 const main = async() => {
     conn.initialize()
-
-    const orm = await MikroORM.init(microConfig);
-    await orm.getMigrator().up();
 
     const corsOptions = {
         origin: 'http://localhost:3000',
