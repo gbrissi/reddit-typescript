@@ -8,9 +8,6 @@ import { validateRegister } from "../utils/validateRegister";
 import { sendEmail } from "../utils/sendEmail";
 import { v4 } from 'uuid'
 import { conn } from "../index";
-import { FindOptionsWhere } from "typeorm/find-options/FindOptionsWhere";
-import { FindOperator } from "typeorm/find-options/FindOperator";
-import { getConnection } from "typeorm";
 
 @ObjectType() 
 class FieldError {
