@@ -1,7 +1,8 @@
 import { Post } from "../entities/Post";
-import { Resolver, Query, Arg, Mutation, InputType, Field, Ctx, UseMiddleware } from "type-graphql";
+import { Resolver, Query, Arg, Mutation, InputType, Field, Ctx, UseMiddleware, Int } from "type-graphql";
 import { MyContext } from "../types";
 import { isAuth } from "../middleware/isAuth";
+import { conn } from "../index";
 
 @InputType()
 class PostInput {
@@ -15,9 +16,22 @@ class PostInput {
 @Resolver()
 export class PostResolver {
     @Query(() => [Post])
-    async posts(    
+    async posts(  
+        @Arg('limit', () => Int) limit: number,
+        @Arg('cursor', () => String, { nullable: true }) cursor: string | null 
     ): Promise<Post[]> {
-        return Post.find()
+        const realLimit = Math.min(50, limit);
+        const qb = conn
+            .getRepository(Post)
+            .createQueryBuilder("post")
+            .orderBy('"createdAt"', "DESC")
+            .take(realLimit)
+
+        if(cursor) {
+            qb.where('"createdAt" < :cursor', {cursor: new Date(parseInt(cursor))})
+        }
+
+        return qb.getMany();
     }
 
     @Query(() => Post, {nullable: true})
