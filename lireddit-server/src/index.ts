@@ -14,6 +14,7 @@ import {DataSource} from 'typeorm'
 import { Post } from "./entities/Post";
 import { User } from "./entities/User";
 import { MyContext } from "./types";
+import path from 'path'
 
 export const conn = new DataSource({
     type: 'postgres',
@@ -21,13 +22,15 @@ export const conn = new DataSource({
     username: 'postgres',
     password: 'admin',
     logging: true,
+    migrations: [path.join(__dirname, "./migrations/*")],
     synchronize: true,
     entities: [Post, User]
 })
 
 const main = async() => {
-    conn.initialize()
-    
+    await conn.initialize()
+    conn.runMigrations()
+
     const corsOptions = {
         origin: 'http://localhost:3000',
         credentials: true
