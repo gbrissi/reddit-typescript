@@ -299,7 +299,7 @@ class FakePosts1667698891864 {
         `);
         });
     }
-    down(queryRunner) {
+    down(_) {
         return __awaiter(this, void 0, void 0, function* () {
         });
     }
