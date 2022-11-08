@@ -14,7 +14,7 @@ const Index = () => {
   return (
     <Layout>
       <NextLink href='/create-post'>
-        <Link>createPost</Link>
+          <Link>createPost</Link>
       </NextLink>
       <br/>
       {!data ? (
@@ -24,7 +24,7 @@ const Index = () => {
           {data.posts.map((p) => 
             <Box key={p.id} p={5} shadow="md" borderWidth={1}>
               <Heading fontSize='xl'>{p.title}</Heading>
-              <Text mt={4}>{p.text}</Text>
+              <Text mt={4}>{p.textSnippet}</Text>
             </Box>
           )}
         </Stack>
