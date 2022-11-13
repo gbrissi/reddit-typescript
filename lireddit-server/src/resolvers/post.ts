@@ -1,5 +1,5 @@
 import { Post } from "../entities/Post";
-import { Resolver, Query, Arg, Mutation, InputType, Field, Ctx, UseMiddleware, Int, FieldResolver, Root } from "type-graphql";
+import { Resolver, Query, Arg, Mutation, InputType, Field, Ctx, UseMiddleware, Int, FieldResolver, Root, ObjectType } from "type-graphql";
 import { MyContext } from "../types";
 import { isAuth } from "../middleware/isAuth";
 import { conn } from "../index";
@@ -12,6 +12,14 @@ class PostInput {
     text: string
 }
 
+@ObjectType()
+class PaginatedPosts {
+    @Field(() => [Post])
+    posts: Post[]
+    @Field()
+    hasMore: boolean;
+}
+
 @Resolver(Post)
 export class PostResolver {
     
@@ -22,11 +30,11 @@ export class PostResolver {
         return root.text.slice(0, 50)
     }
     
-    @Query(() => [Post])
+    @Query(() => PaginatedPosts)
     async posts(  
         @Arg('limit', () => Int) limit: number,
         @Arg('cursor', () => String, { nullable: true }) cursor: string | null 
-    ): Promise<Post[]> {
+    ): Promise<PaginatedPosts> {
         const realLimit = Math.min(50, limit);
         const qb = conn
             .getRepository(Post)
@@ -38,7 +46,7 @@ export class PostResolver {
             qb.where('"createdAt" < :cursor', {cursor: new Date(parseInt(cursor))})
         }
 
-        return qb.getMany();
+        return {posts: await qb.getMany(), hasMore: true};
     }
 
     @Query(() => Post, {nullable: true})
@@ -83,6 +91,16 @@ export class PostResolver {
         } else {
             await Post.delete(id)
             return true;
+        }
+    }
+
+    @Mutation(() => Boolean)
+    async deleteEverything(): Promise<boolean> {
+        try {
+            Post.delete({})
+            return true
+        } catch (error) {
+            return false
         }
     }
 }

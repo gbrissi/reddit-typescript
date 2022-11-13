@@ -9,19 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FakePosts1667698891864 = void 0;
-class FakePosts1667698891864 {
+exports.liredditServer1668306303806 = void 0;
+class liredditServer1668306303806 {
     up(queryRunner) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield queryRunner.query(`
-
-        `);
         });
     }
-    down(_) {
+    down(queryRunner) {
         return __awaiter(this, void 0, void 0, function* () {
         });
     }
 }
-exports.FakePosts1667698891864 = FakePosts1667698891864;
-//# sourceMappingURL=1667698891864-lireddit-server.js.map
+exports.liredditServer1668306303806 = liredditServer1668306303806;
+//# sourceMappingURL=1668306303806-lireddit-server.js.map

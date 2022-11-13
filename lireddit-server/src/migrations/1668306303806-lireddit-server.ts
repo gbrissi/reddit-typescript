@@ -1,9 +1,10 @@
 import { MigrationInterface, QueryRunner } from "typeorm"
 
-export class FakePosts1667698891864 implements MigrationInterface {
+export class liredditServer1668306303806 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`
+    await queryRunner.query(
+        `
         insert into post (title, text, "creatorId", "createdAt") values ('Free the Nipple', 'Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus.', 1, '2022-04-22T11:54:24Z');
         insert into post (title, text, "creatorId", "createdAt") values ('Demons (Dèmoni)', 'Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero.', 1, '2022-03-20T02:46:20Z');
         insert into post (title, text, "creatorId", "createdAt") values ('Atlantic City', 'Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.', 1, '2022-04-27T04:38:51Z');
@@ -298,8 +299,9 @@ export class FakePosts1667698891864 implements MigrationInterface {
         Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.
 
         Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.', 1, '2022-10-11T00:46:22Z');
-        `)
-    }
+        `
+    )
+}
 
     public async down(_: QueryRunner): Promise<void> {
     }
