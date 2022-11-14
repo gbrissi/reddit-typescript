@@ -59,15 +59,17 @@ let PostResolver = class PostResolver {
     posts(limit, cursor) {
         return __awaiter(this, void 0, void 0, function* () {
             const realLimit = Math.min(50, limit);
+            const realLimitPlusOne = realLimit + 1;
             const qb = index_1.conn
                 .getRepository(Post_1.Post)
                 .createQueryBuilder("post")
                 .orderBy('"createdAt"', "DESC")
-                .take(realLimit);
+                .take(realLimitPlusOne);
             if (cursor) {
                 qb.where('"createdAt" < :cursor', { cursor: new Date(parseInt(cursor)) });
             }
-            return { posts: yield qb.getMany(), hasMore: true };
+            const posts = yield qb.getMany();
+            return { posts: posts.slice(0, realLimit), hasMore: posts.length === realLimitPlusOne };
         });
     }
     post(id) {
